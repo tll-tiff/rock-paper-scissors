@@ -1,0 +1,21 @@
+body{
+    display:flex;
+    align-items: center;
+    flex-direction:column;
+}
+
+.btns-container{
+    display:flex;
+}
+
+#results-container, #score-container{
+    border: 1px solid black;
+    width: 400px;
+    margin: 10px;
+    text-align: center;
+    padding: 10px;
+}
+
+#results-container{
+    height: 100px;
+}

@@ -19,47 +19,60 @@ function playRound(playerSelection, computerSelection){
     playerSelection = playerSelection.toUpperCase();
 
     if(computerSelection === playerSelection){
-        console.log (`${computerSelection} VS. ${playerSelection}....`+ "It's a tie!");
+        p.textContent =  (`${computerSelection} VS. ${playerSelection}....`+ "It's a tie!");
         return 0;
     }else if(computerSelection == 'ROCK' && playerSelection == 'PAPER'){
-        console.log ("PAPER beats ROCK.... You win!");
+        p.textContent =  ("PAPER beats ROCK.... You win!");
         return 1;
     }else if(computerSelection == 'PAPER' && playerSelection  == 'ROCK'){
-        console.log ("PAPER beats ROCK.... Computer wins!");
+        p.textContent =  ("PAPER beats ROCK.... Computer wins!");
         return 2;
     }else if(computerSelection == 'SCISSORS' && playerSelection  == 'PAPER'){
-        console.log ("SCISSORS beats PAPER.... Computer wins!");
+        p.textContent =  ("SCISSORS beats PAPER.... Computer wins!");
         return 2;
     }else if(computerSelection == 'PAPER' && playerSelection  == 'SCISSORS'){
-        console.log ("SCISSORS beats PAPER.... You win!");
+        p.textContent =  ("SCISSORS beats PAPER.... You win!");
         return 1;
     }else if(computerSelection == 'SCISSORS' && playerSelection  == 'ROCK'){
-        console.log ("ROCK beats SCISSORS.... You win!");
+        p.textContent =  ("ROCK beats SCISSORS.... You win!");
         return 1;
     }else if(computerSelection == 'ROCK' && playerSelection  == 'SCISSORS'){
-        console.log ("ROCK beats SCISSORS.... Computer wins!");
+        p.textContent =  ("ROCK beats SCISSORS.... Computer wins!");
         return 2;
 }
 
 }
+let p = document.getElementById("results-paragraph");
+let buttons = document.querySelectorAll("button:not(#reset-btn)");
+let playerScore = document.getElementById("player-score");
+let compScore = document.getElementById("comp-score");
 
-function playGame(){
-    let playerScore = 0;
-    let computerScore = 0;
-    for(let i = 1; i < 6; i++){
-        console.log(`ROUND ${i}\n`);
-        let result = playRound(prompt("Enter your choice: "), getComputerChoice());
-        if (result == 1){
-            playerScore++;
-        }else if(result == 2){
-            computerScore++;
-        }
+buttons.forEach(function(button){
+    button.addEventListener("click", function() {
+                let result = playRound(button.textContent, getComputerChoice());
+
+                if(result == 1){
+                    playerScore.textContent = (parseInt(playerScore.textContent) + 1).toString();
+                }else if(result == 2){
+                    compScore.textContent = (parseInt(compScore.textContent) + 1).toString();
+                }
+
+                if(playerScore.textContent == "5" || compScore.textContent == "5"){
+
+                if(playerScore.textContent == "5"){
+                    p.textContent = "5-" + compScore.textContent + ", you win!";
+                }else if(compScore.textContent == "5"){
+                    p.textContent = playerScore.textContent + "-5, computer wins!";
+                }  
+
+            }
     }
+)});
 
-    if(playerScore > computerScore){
-        return ('Player wins!');
-    }else{
-        return ('Computer wins!');    }
-}
+let resetBtn = document.querySelector("#reset-btn");
 
-console.log(playGame());
+resetBtn.addEventListener("click", () =>{
+    playerScore.textContent = "0";
+    compScore.textContent = "0";
+    p.textContent = 'Game has reset.';
+});
